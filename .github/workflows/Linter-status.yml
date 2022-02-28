@@ -1,0 +1,10 @@
+name: 
+on: push
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+      steps:
+        - name: install deps
+          run: make install
+        - name: run linter
+          run: make lint
