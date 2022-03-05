@@ -1,8 +1,8 @@
 install:
 	npm ci
 start: 
-	cli/gendiff --help
+	node cli/gendiff.js --help
 test:
-	cli/gendiff gen file1.json file2.json
+	node cli/gendiff.js gen __fixtures__/file1.json __fixtures__/file2.json
 lint: 
 	npx eslint .
