@@ -16,6 +16,7 @@
   ],
   "author": "nikita",
   "license": "ISC",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/CryFromTheHeart/frontend-project-lvl2/issues"
   },
@@ -25,6 +26,8 @@
   },
   "devDependencies": {
     "eslint": "^8.10.0",
-    "lodash": "^4.17.21"
+    "jest": "^27.5.1",
+    "lodash": "^4.17.21",
+    "path": "^0.12.7"
   }
 }
