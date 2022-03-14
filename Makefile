@@ -2,7 +2,8 @@ install:
 	npm ci
 start: 
 	node cli/gendiff.js --help
-test:
-	node cli/gendiff.js gen __fixtures__/file1.json __fixtures__/file2.json
+jest:
+	NODE_OPTIONS=--experimental-vm-modules npx jest
 lint: 
 	npx eslint .
+test: jest lint
