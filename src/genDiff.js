@@ -1,34 +1,33 @@
-import { readFileSync } from 'fs';
 import _ from 'lodash';
-const parse = (file) => JSON.parse(readFileSync(file));
+import parse from './parsers.js';
+
+const getRemoveString = (key, value) => `  - ${key}: ${value}`;
+const getAddString = (key, value) => `  + ${key}: ${value}`;
 
 const getKeys = (jsonFile) => Object.keys(jsonFile);
 
 const genDiff = (file1, file2) => {
-  let result = '';
   const jsonFile1 = parse(file1);
   const jsonFile2 = parse(file2);
-  
+
   const keysFile1 = getKeys(jsonFile1);
   const keysFile2 = getKeys(jsonFile2);
   const keys = _.union(keysFile1, keysFile2);
   const sortedKeys = _.sortBy(keys);
-  
-  
-  for (const key of sortedKeys) {
+
+  const lines = sortedKeys.map((key) => {
     if (keysFile1.includes(key) && !keysFile2.includes(key)) {
-      result = `${result}  - ${key}: ${jsonFile1[key]}\n`;
+      return getRemoveString(key, jsonFile1[key]);
     }
-    else if (!keysFile1.includes(key) && keysFile2.includes(key)) {
-      result = `${result}  + ${key}: ${jsonFile2[key]}\n`;
+    if (!keysFile1.includes(key) && keysFile2.includes(key)) {
+      return getAddString(key, jsonFile2[key]);
     }
-    else if (keysFile1.includes(key) && keysFile2.includes(key) && jsonFile1[key] !== jsonFile2[key]) {
-      result = `${result}  - ${key}: ${jsonFile1[key]}\n  + ${key}: ${jsonFile2[key]}\n`;
+    if (keysFile1.includes(key) && keysFile2.includes(key) && jsonFile1[key] !== jsonFile2[key]) {
+      return `${getRemoveString(key, jsonFile1[key])}\n${getAddString(key, jsonFile2[key])}`;
     }
-    else {
-      result = `${result}    ${key}: ${jsonFile1[key]}\n`;
-    }
-  }
-  return (`{\n${result}}`);
-}
+
+    return `    ${key}: ${jsonFile1[key]}`;
+  });
+  return ['{', ...lines, '}'].join('\n');
+};
 export default genDiff;
