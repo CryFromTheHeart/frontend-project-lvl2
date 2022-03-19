@@ -1,33 +1,40 @@
 import _ from 'lodash';
 import parse from './parsers.js';
 
-const getRemoveString = (key, value) => `  - ${key}: ${value}`;
-const getAddString = (key, value) => `  + ${key}: ${value}`;
+const getKeys = (obj) => Object.keys(obj);
 
-const getKeys = (jsonFile) => Object.keys(jsonFile);
+const genDiff = (pathFile1, pathFile2) => {
+  const file1 = parse(pathFile1);
+  const file2 = parse(pathFile2);
+  const iter = (coll1, coll2) => {
+    const keys1 = getKeys(coll1);
+    const keys2 = getKeys(coll2);
+    const keys = _.union(keys1, keys2);
+    const sortedKeys = _.sortBy(keys);
 
-const genDiff = (file1, file2) => {
-  const jsonFile1 = parse(file1);
-  const jsonFile2 = parse(file2);
+    const difference = sortedKeys.map((key) => {
+      const value1 = coll1[key];
+      const value2 = coll2[key];
 
-  const keysFile1 = getKeys(jsonFile1);
-  const keysFile2 = getKeys(jsonFile2);
-  const keys = _.union(keysFile1, keysFile2);
-  const sortedKeys = _.sortBy(keys);
-
-  const lines = sortedKeys.map((key) => {
-    if (keysFile1.includes(key) && !keysFile2.includes(key)) {
-      return getRemoveString(key, jsonFile1[key]);
-    }
-    if (!keysFile1.includes(key) && keysFile2.includes(key)) {
-      return getAddString(key, jsonFile2[key]);
-    }
-    if (keysFile1.includes(key) && keysFile2.includes(key) && jsonFile1[key] !== jsonFile2[key]) {
-      return `${getRemoveString(key, jsonFile1[key])}\n${getAddString(key, jsonFile2[key])}`;
-    }
-
-    return `    ${key}: ${jsonFile1[key]}`;
-  });
-  return ['{', ...lines, '}'].join('\n');
+      if (!_.has(coll2, key)) {
+        return { type: 'remove', key, value: value1 };
+      }
+      if (!_.has(coll1, key)) {
+        return { type: 'add', key, value: value2 };
+      }
+      if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
+        return { type: 'rec', key, value: iter(value1, value2) };
+      }
+      if (_.isEqual(value1, value2)) {
+        return { type: 'nothing', key, value: value1 };
+      }
+      return {
+        type: 'update', key, valueOld: value1, valueNew: value2,
+      };
+    });
+    return difference;
+  };
+  return iter(file1, file2);
 };
+
 export default genDiff;
