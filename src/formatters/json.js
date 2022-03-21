@@ -7,7 +7,7 @@ const getStrObj = (value) => {
   const result = Object
     .entries(value)
     .map(([key, val]) => `"${key}":${getStrObj(val)}`);
-  return ['{', ...result, '}'].join('');
+  return `{${result.join(',')}}`;
 };
 
 const getJson = (diff) => {
