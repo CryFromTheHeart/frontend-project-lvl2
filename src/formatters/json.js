@@ -16,15 +16,15 @@ const getJson = (diff) => {
       const { type, key } = keyInfo;
       switch (type) {
         case 'add':
-          return `{"${key}":["add",${getStrObj(keyInfo.value)}]}`;
+          return `{"key":"${key}","type":"add","value":{${getStrObj(keyInfo.value)}}}`;
         case 'remove':
-          return `{"${key}":["remove",${getStrObj(keyInfo.value)}]}`;
+          return `{"key":"${key}","type":"remove","value":{${getStrObj(keyInfo.value)}}}`;
         case 'nothing':
-          return `{"${key}":["no-change",${getStrObj(keyInfo.value)}]}`;
+          return `{"key":"${key}","type":"no-change","value":{${getStrObj(keyInfo.value)}}}`;
         case 'update':
-          return `{"${key}":["updated",${getStrObj(keyInfo.valueOld)},${getStrObj(keyInfo.valueNew)}]}`;
+          return `{"key":"${key}","type":"updated","value":[${getStrObj(keyInfo.valueOld)},${getStrObj(keyInfo.valueNew)}]}`;
         case 'rec':
-          return `{"${key}":["no-change",${iter(keyInfo.value)}]}`;
+          return `{"key":"${key}","type":"no-change","value":${iter(keyInfo.value)}}`;
         default:
           throw new Error('failed');
       }
