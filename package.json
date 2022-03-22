@@ -4,6 +4,9 @@
   "description": "get difference",
   "main": "./index.js",
   "type": "module",
+  "bin" : {
+    "gendiff" : "bin/gendiff.js"
+  },
   "scripts": {
     "test": "jest"
   },
