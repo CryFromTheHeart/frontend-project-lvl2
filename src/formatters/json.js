@@ -16,7 +16,7 @@ const getJson = (diff) => {
       const { type, key } = keyInfo;
       switch (type) {
         case 'add':
-          return `{"key":"${key}","type":"add","value":${JSON.stringify(keyInfo.value)}`;
+          return `{"key":"${key}","type":"add","value":${JSON.stringify(keyInfo.value)}}`;
         case 'remove':
           return `{"key":"${key}","type":"remove","value":${JSON.stringify(keyInfo.value)}}`;
         case 'nothing':
@@ -24,7 +24,7 @@ const getJson = (diff) => {
         case 'update':
           return `{"key":"${key}","type":"updated","value":[${JSON.stringify(keyInfo.valueOld)},${JSON.stringify(keyInfo.valueNew)}]}`;
         case 'rec':
-          return `{"key":"${key}","type":"no-change","value":${iter(keyInfo.value)}}`;
+          return `{"key":"${key}","type":"no-change","value":[${iter(keyInfo.value)}]}`;
         default:
           throw new Error('failed');
       }
