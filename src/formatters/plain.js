@@ -23,7 +23,7 @@ const getFormat = (difference) => {
         case 'nothing':
           return null;
         case 'rec':
-          return(iter(keyInfo.value, path ? `${path}.${key}` : key));
+          return (iter(keyInfo.value, path ? `${path}.${key}` : key));
         default:
           throw new Error('mission failed');
       }
