@@ -1,15 +1,5 @@
 import _ from 'lodash';
-
-const getStrObj = (value) => {
-  if (!_.isObject(value)) {
-    return `${value}`;
-  }
-  const result = Object
-    .entries(value)
-    .map(([key, val]) => `"${key}":${getStrObj(val)}`);
-  return `{${result.join(',')}}`;
-};
-
+/*
 const getJson = (diff) => {
   const iter = (difference) => {
     const result = difference.map((keyInfo) => {
@@ -22,7 +12,7 @@ const getJson = (diff) => {
         case 'nothing':
           return `{"key":"${key}","type":"no-change","value":${JSON.stringify(keyInfo.value)}}`;
         case 'update':
-          return `{"key":"${key}","type":"updated","value":[${JSON.stringify(keyInfo.valueOld)},${JSON.stringify(keyInfo.valueNew)}]}`;
+          return `{"key":"${key}","type":"updated","valueOld":${JSON.stringify(keyInfo.valueOld)},"valueNew":${JSON.stringify(keyInfo.valueNew)}}`;
         case 'rec':
           return `{"key":"${key}","type":"no-change","value":[${iter(keyInfo.value)}]}`;
         default:
@@ -32,6 +22,11 @@ const getJson = (diff) => {
     return `${result.join(',')}`;
   };
   return `[${iter(diff)}]`;
+};
+*/
+
+const getJson = (diff) => {
+  return JSON.stringify(diff);
 };
 
 export default getJson;
