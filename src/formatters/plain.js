@@ -11,29 +11,25 @@ const getValue = (value) => {
 };
 const getFormat = (difference) => {
   const iter = (diff, path) => {
-    const result = [];
-    diff.forEach((keyInfo) => {
+    const result = diff.map((keyInfo) => {
       const { type, key } = keyInfo;
       switch (type) {
         case 'add':
-          result.push(`Property '${path ? `${path}.${key}` : key}' was added with value: ${getValue(keyInfo.value)}`);
-          break;
+          return (`Property '${path ? `${path}.${key}` : key}' was added with value: ${getValue(keyInfo.value)}`);
         case 'remove':
-          result.push(`Property '${path ? `${path}.${key}` : key}' was removed`);
-          break;
+          return (`Property '${path ? `${path}.${key}` : key}' was removed`);
         case 'update':
-          result.push(`Property '${path ? `${path}.${key}` : key}' was updated. From ${getValue(keyInfo.valueOld)} to ${getValue(keyInfo.valueNew)}`);
-          break;
+          return (`Property '${path ? `${path}.${key}` : key}' was updated. From ${getValue(keyInfo.valueOld)} to ${getValue(keyInfo.valueNew)}`);
         case 'nothing':
-          break;
+          return null;
         case 'rec':
-          result.push(iter(keyInfo.value, path ? `${path}.${key}` : key));
-          break;
+          return(iter(keyInfo.value, path ? `${path}.${key}` : key));
         default:
           throw new Error('mission failed');
       }
     });
-    return result.join('\n');
+    const filtredResult = result.filter((str) => str !== null);
+    return filtredResult.join('\n');
   };
   return iter(difference, '');
 };
