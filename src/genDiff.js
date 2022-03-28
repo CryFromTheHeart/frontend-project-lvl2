@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import parse from './parsers.js';
 import path from 'path';
 import fs from 'fs';
+import parse from './parsers.js';
 
 const getKeys = (obj) => Object.keys(obj);
 const readFile = (filePath) => fs.readFileSync(filePath);
