@@ -1,11 +1,19 @@
 import _ from 'lodash';
 import parse from './parsers.js';
+import path from 'path';
+import fs from 'fs';
 
 const getKeys = (obj) => Object.keys(obj);
+const readFile = (filePath) => fs.readFileSync(filePath);
+const getFormat = (file) => path.extname(file).slice(1);
 
 const genDiff = (pathFile1, pathFile2) => {
-  const file1 = parse(pathFile1);
-  const file2 = parse(pathFile2);
+  const format1 = getFormat(pathFile1);
+  const format2 = getFormat(pathFile2);
+
+  const file1 = parse(readFile(pathFile1), format1);
+  const file2 = parse(readFile(pathFile2), format2);
+
   const iter = (coll1, coll2) => {
     const keys1 = getKeys(coll1);
     const keys2 = getKeys(coll2);
