@@ -2,7 +2,7 @@
 
 import { program } from 'commander';
 
-import getFormat from '../src/formatters/index.js';
+import getFormat from '../src/index.js';
 
 program.version('1.0.0');
 
