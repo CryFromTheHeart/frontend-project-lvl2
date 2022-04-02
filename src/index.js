@@ -1,6 +1,6 @@
-import genDiff from '../genDiff.js';
-import getStylish from './stylish.js';
-import getPlain from './plain.js';
+import genDiff from './genDiff.js';
+import getStylish from './formatters/stylish.js';
+import getPlain from './formatters/plain.js';
 
 const getDifference = (pathFile1, pathFile2, format = 'stylish') => {
   const difference = genDiff(pathFile1, pathFile2);

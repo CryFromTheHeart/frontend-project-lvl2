@@ -10,4 +10,4 @@ jobs:
            make install
        - name: Run tests
          run: |
-           NODE_OPTIONS=--experimental-vm-modules npm test -- --coverage __test__ ${{ secrets.CODE_CLIMATE }}
+           NODE_OPTIONS=--experimental-vm-modules npm run test -- --coverage ${{ secrets.CODE_CLIMATE }}
