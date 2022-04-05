@@ -14,6 +14,4 @@ jobs:
           with:
             coverageCommand: make test-coverage
             debug: true
-        - name: Run tests
-          run: |
-            NODE_OPTIONS=--experimental-vm-modules npm run test -- --coverage
+        - run: NODE_OPTIONS=--experimental-vm-modules npm run test -- --coverage
