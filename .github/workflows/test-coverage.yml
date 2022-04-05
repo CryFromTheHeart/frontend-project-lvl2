@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
        - uses: paambaati/codeclimate-action@v2.7.4
-       -  env:
+         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE }}
        - name: npm install
          run: | 
