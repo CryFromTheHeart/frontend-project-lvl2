@@ -4,12 +4,15 @@ jobs:
   my-job:
     runs-on: ubuntu-latest 
     steps:
-       - uses: paambaati/codeclimate-action@v2.7.4
+       - uses: actions/checkout@v2
+       - run: make install
+
+       - uses: paambaati/codeclimate-action@v3
          env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE }}
-       - name: npm install
-         run: | 
-           make install
+         with:
+          coverageCommand: make test-coverage
+          debug: true
        - name: Run tests
          run: |
            NODE_OPTIONS=--experimental-vm-modules npm run test -- --coverage
