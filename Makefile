@@ -1,7 +1,7 @@
 install:
 	npm ci
-start: 
-	node cli/gendiff.js --help
+test-coverage: 
+	NODE_OPTIONS=--experimental-vm-modules npm run test -- --coverage
 test:
 	NODE_OPTIONS=--experimental-vm-modules npx jest
 lint: 
