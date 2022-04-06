@@ -1,10 +1,8 @@
 import _ from 'lodash';
 
-const getKeys = (obj) => Object.keys(obj);
-
 const buildTree = (data1, data2) => {
-  const keys1 = getKeys(data1);
-  const keys2 = getKeys(data2);
+  const keys1 = Object.keys(data1);
+  const keys2 = Object.keys(data2);
   const keys = _.union(keys1, keys2);
   const sortedKeys = _.sortBy(keys);
 
