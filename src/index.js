@@ -1,13 +1,13 @@
-import choseFormat from "./formatters/index.js"
-import buildTree from "./buildTree.js"
 import path from 'path';
 import fs from 'fs';
-import parse from "./parsers.js"
+import choseFormat from './formatters/index.js';
+import buildTree from './buildTree.js';
+import parse from './parsers.js';
 
 const readFile = (filePath) => fs.readFileSync(filePath);
 const getFormat = (file) => path.extname(file).slice(1);
 
-const getStart = (pathFile1, pathFile2, format = "stylish") => {
+const getStart = (pathFile1, pathFile2, format = 'stylish') => {
   const format1 = getFormat(pathFile1);
   const format2 = getFormat(pathFile2);
 
@@ -19,4 +19,3 @@ const getStart = (pathFile1, pathFile2, format = "stylish") => {
 };
 
 export default getStart;
-
